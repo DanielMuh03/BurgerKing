@@ -35,12 +35,17 @@
           <a href="{% url 'cart_detail' %}">
           <img style="width: 40px; height: auto" src="{% static 'carts (1).png' %}">
           </a>
+          {% if request.user.is_superuser %}
           <a href="{% url 'create' %}" class="navbar-brand">&plus;</a>
+          {% endif %}
+
           <img style="width: 70px; height: auto; margin-left: 70px" src="{% static 'logo.svg' %}" >
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+
+        <form action="{% url 'search' %}" method="get" class="d-flex">
+          <input name="q" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
+
       </div>
     </nav>
 

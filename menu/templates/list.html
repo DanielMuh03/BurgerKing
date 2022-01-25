@@ -2,7 +2,11 @@
 {% load static %}
 {% block content %}
 
-    <div class="container card-group">
+
+        <div style="display: flex; justify-content: flex-end;">
+    <a href="{% url 'list' slug %}?filter=in+stock">In stock</a>
+            </div>
+<div class="container card-group">
     {% for product in products %}
           <div style="background-color: #f5ebdc; border: none" class="card">
             <img style="width: 200px; height: auto;" src="{{ product.image.url }}" class="card-img-top" alt="...">
@@ -11,9 +15,11 @@
                   <a href="{% url 'detail' product.id %}">{{ product.name }}</a>
               </h5>
               <p class="card-text">{{ product.price }} $</p>
+                {% if product.status == 'in stock' %}
                 <a href="{% url 'cart_add' product.id %}">
                 <img style="width: 60px; height: auto" src="{% static 'photo_2022-01-20_16-20-33.jpg' %}">
                 </a>
+                {% endif %}
             </div>
           </div>
     {% endfor %}
