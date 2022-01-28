@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 from menu.models import Product
 from .forms import OrderCreateForm
-from order.models import OrderItem
+from order.models import OrderItem, Order
 
 
 def order_create(request):
@@ -18,11 +18,22 @@ def order_create(request):
             order.save()
             for product_id, description in cart.items():
                 product = Product.objects.get(pk=int(product_id))
-                OrderItem.objects.create(order=order, product=product)
+                OrderItem.objects.create(order=order, product=product, quantity=int(description['quantity']))
             cart.clear()
             return render(request, 'order_created.html', locals())
     else:
         order_form = OrderCreateForm()
-        prices = [float(item['quantity'] * item['price']) for item in cart.values()]
+        prices = [float(float(item['quantity']) * float(item['price'])) for item in cart.values()]
         total_cost = round(sum(prices), 2)
     return render(request, 'order_process.html', locals())
+
+
+def order_history(request):
+    orders = request.user.orders.all()
+    return render(request, 'history.html', locals())
+
+
+def order_history_detail(request, order_id):
+    order = Order.objects.get(pk=order_id)
+    order_items = order.items.all()
+    return render(request, 'history_detail.html', locals())

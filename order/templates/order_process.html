@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load cart_tag %}
 {% block content %}
     <form method="post" enctype="multipart/form-data">
         {{ order_form.as_p }}
@@ -13,6 +14,7 @@
       <th scope="col">Image</th>
       <th scope="col">Price</th>
         <th scope="col">Quantity</th>
+        <th scope="col">Total</th>
 
     </tr>
   </thead>
@@ -23,6 +25,7 @@
       <td><img style="width: 100px; height auto;" src="{{ val.image }}"></td>
       <td>{{ val.price }}</td>
         <td>{{ val.quantity }}</td>
+        <td>{{ val.price|multiply:val.quantity }}</td>
     </tr>
   {% endfor %}
   </tbody>

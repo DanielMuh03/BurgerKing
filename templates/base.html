@@ -15,6 +15,16 @@
         body {
             background-color: #f5ebdc;
         }
+
+        a {
+        text-decoration: none;
+        color: black;
+        transition: 0.8s;
+        }
+        a:hover{
+        color: red;
+        transition: 0.8s;
+        }
     </style>
 
 </head>
@@ -28,7 +38,7 @@
           <a href="{% url 'register' %}">Sing Up</a>
           <a href="{% url 'login' %}">Log In</a>
           {% else %}
-          <span>{{ request.user.username }}</span>
+          <a href="{% url 'order-history' %}"><span>{{ request.user.username }}</span></a>
           <a href="{% url 'logout' %}">Logout</a>
           {% endif %}
 
